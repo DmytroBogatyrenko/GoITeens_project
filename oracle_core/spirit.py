@@ -1,10 +1,14 @@
 import json
+import os
+import time
 from google import genai
 from google.genai import types
-import time
+from dotenv import load_dotenv
 
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 MODEL_NAME = "gemini-3.1-flash-lite-preview"
-API_KEY = "AIzaSyDEv-SJBG14YepopGOKAjHzea2V-SjgHmk"
 
 client = genai.Client(api_key=API_KEY)
 
