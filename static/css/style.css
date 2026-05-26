@@ -1,0 +1,415 @@
+/* 1. ПІДКЛЮЧЕННЯ ШРИФТІВ ТА ЗМІННІ */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Philosopher:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+    --deep-green: #1b3022;
+    --gold: #d4af37;
+    --fire: #ff4500;
+    --parchment: #e2d1b0;
+    --dark: #0d0d0d;
+    --stone-gradient: linear-gradient(145deg, #4a5054, #2c3034);
+}
+
+/* 2. БАЗОВІ СТИЛІ ТА ФОН */
+body {
+    margin: 0;
+    font-family: 'Philosopher', sans-serif;
+    background: var(--dark);
+    /* Темний фон з епічною картинкою на задньому плані */
+    background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
+                      url('https://images.unsplash.com/photo-1599407630224-721c8e4850e5?q=80&w=2070&auto=format&fit=crop'); 
+    background-size: cover;
+    background-attachment: fixed;
+    color: var(--parchment);
+    overflow-x: hidden;
+    cursor: url('https://cur.cursors-4u.net/games/gam-4/gam372.cur'), auto;
+}
+
+h1, h2, h3, .nav a { font-family: 'Almendra', serif; }
+
+/* 3. АНІМАЦІЇ (REVEAL) */
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 4. ДИНАМІЧНИЙ ТУМАН ТА ДРАКОН */
+.smoke-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.fog-cloud {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    filter: blur(50px);
+    border-radius: 50%;
+    animation: cloudFly linear infinite;
+}
+
+.cloud1 { width: 600px; height: 400px; top: 10%; animation-duration: 45s; }
+.cloud2 { width: 500px; height: 500px; top: 60%; animation-duration: 65s; animation-delay: -15s; }
+
+@keyframes cloudFly {
+    0% { transform: translateX(-110%); }
+    100% { transform: translateX(110vw); }
+}
+
+.dragon-bg {
+    position: fixed;
+    bottom: 20px;
+    right: -50px;
+    width: 400px;
+    height: 400px;
+    background: url('https://cdn.pixabay.com/animation/2022/11/17/16/00/16-00-50-61_512.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 0.6;
+    pointer-events: none;
+    animation: dragonFloat 8s ease-in-out infinite;
+}
+
+@keyframes dragonFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-30px, -20px) rotate(-5deg); }
+}
+
+.fire-corner {
+    position: fixed;
+    bottom: 0; left: 0; width: 100%; height: 100px;
+    background: linear-gradient(to top, rgba(255, 69, 0, 0.2), transparent);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 5. НАВІГАЦІЯ */
+.nav {
+    background: rgba(20, 25, 20, 0.95);
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    border-bottom: 2px solid #4a5054;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+}
+
+.nav a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.nav a:hover { color: white; text-shadow: 0 0 10px var(--gold); }
+
+/* 6. КНОПКИ-КАМЕНІ */
+.btn-stone {
+    background: var(--stone-gradient);
+    color: var(--gold);
+    padding: 15px 30px;
+    font-family: 'Almendra', serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    text-shadow: 2px 2px 4px black;
+    border: none;
+    clip-path: polygon(8% 0%, 100% 4%, 96% 100%, 0% 92%);
+}
+
+.btn-stone:hover {
+    color: white;
+    transform: scale(1.05);
+    clip-path: polygon(4% 2%, 98% 0%, 100% 96%, 2% 100%);
+}
+
+.btn-stone:active {
+    transform: translateY(4px);
+}
+
+/* 7. ПЕРГАМЕНТ (ДЛЯ ТОРБИ ТА ФОРМ) */
+.parchment-form {
+    background: #f4e4bc;
+    color: #2c1802;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.9), inset 0 0 60px rgba(139, 69, 19, 0.3);
+    border: 2px solid #8b4513;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.parchment-form h2 { 
+    text-align: center; 
+    border-bottom: 2px solid #8b4513; 
+    margin-bottom: 25px; 
+    color: #5d2e0a; 
+}
+
+/* 8. КАРТКИ МЕНЮ (СТИЛЬ "ВЕРАНДА" - ПРЕМІАЛЬНО) */
+.container { width: 90%; max-width: 1200px; margin: 40px auto; }
+
+.menu-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 30px; 
+}
+
+.knight-card { 
+    background: rgba(255, 255, 255, 0.03); 
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    overflow: hidden; 
+    transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    text-align: center;
+}
+
+.knight-card:hover { 
+    transform: translateY(-10px); 
+    border-color: var(--gold); 
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Стилізована картинка (не на весь екран) */
+.dish-img-wrapper {
+    width: 100%;
+    height: 230px;
+    padding: 15px; /* Створює ефект рамки навколо картинки */
+    box-sizing: border-box;
+}
+
+.dish-img-wrapper img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    filter: sepia(30%) contrast(1.1);
+    transition: 0.5s;
+}
+
+.knight-card:hover .dish-img-wrapper img {
+    filter: sepia(0%) contrast(1.2);
+    transform: scale(1.03);
+}
+
+.card-info {
+    padding: 0 20px 25px 20px;
+}
+
+.card-info h3 {
+    color: var(--gold);
+    margin: 10px 0;
+    font-size: 1.6rem;
+}
+
+.price-tag {
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 15px;
+    display: block;
+}
+/* Той самий магічний курсив */
+.ancient-italic {
+    font-style: italic !important;
+    font-family: 'Philosopher', sans-serif !important;
+    color: #ccc;
+    line-height: 1.8;
+}
+/* Лицарський темно-зелений фон */
+.auth-body {
+    background: #0a2f1f; /* Темно-зелений (Forest Green) */
+    background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png'); /* Текстура шкіри */
+    font-family: 'Georgia', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Контейнер у формі щита або сувою */
+.parchment-auth {
+    background: #fdf5e6; /* Світлий пергамент */
+    border: 4px solid #d4af37; /* Золота рама */
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.7), inset 0 0 40px rgba(212, 175, 55, 0.1);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+/* Заголовок лицарського ордену */
+.auth-title {
+    color: #0a2f1f;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    font-variant: small-caps;
+    border-bottom: 3px double #d4af37;
+    padding-bottom: 10px;
+    text-shadow: 1px 1px 0px #d4af37;
+}
+
+/* Поля вводу */
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    background: #fff;
+    border: 2px solid #0a2f1f;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #0a2f1f;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+/* Лицарська кнопка (Зелено-золота) */
+.btn-knight {
+    background: #0a2f1f;
+    color: #d4af37;
+    border: 2px solid #d4af37;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+}
+
+.btn-knight:hover {
+    background: #d4af37;
+    color: #0a2f1f;
+    box-shadow: 0 0 15px #d4af37;
+}
+
+/* Посилання (Королівський червоний при наведенні) */
+.auth-link {
+    display: block;
+    margin-top: 20px;
+    color: #0a2f1f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-link:hover {
+    color: #8b0000; /* Темно-червоний акцент */
+    text-decoration: underline;
+}
+
+/* Помилка (Червоний сургуч) */
+.alert-medieval {
+    background: #8b0000;
+    color: #fdf5e6;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #d4af37;
+    border-radius: 5px;
+}
+.btn-back {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    color: #0a2f1f;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 1px solid rgba(10, 47, 31, 0.3);
+    transition: all 0.3s;
+}
+
+.btn-back:hover {
+    background: rgba(10, 47, 31, 0.1);
+    border-color: #0a2f1f;
+}
+
+.auth-footer {
+    margin-top: 25px;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    padding-top: 15px;
+}
+/* Дуже базові стилі для перевірки */
+.chat-bubble {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 60px; height: 60px; background: #6a1b9a;
+    border-radius: 50%; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; font-size: 30px;
+    z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.chat-window {
+    position: fixed; bottom: 90px; right: 20px;
+    width: 300px; height: 400px; background: white;
+    border-radius: 15px; display: none; flex-direction: column;
+    z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    overflow: hidden; font-family: sans-serif;
+}
+.chat-window--open { display: flex; }
+.chat-window__header { background: #6a1b9a; color: white; padding: 15px; display: flex; justify-content: space-between; }
+.chat-window__messages { flex: 1; padding: 10px; overflow-y: auto; background: #f5f5f5; }
+.chat-window__footer { padding: 10px; display: flex; border-top: 1px solid #ddd; }
+.chat-window__input { flex: 1; border: none; outline: none; }
+.chat-msg__bubble { background: #fff; padding: 8px 12px; border-radius: 10px; margin-bottom: 5px; max-width: 80%; border: 1px solid #eee; }
+.chat-msg--user .chat-msg__bubble { background: #e1f5fe; align-self: flex-end; margin-left: auto; }
+
+/* Клас для зірочки */
+.oracle-star {
+    font-size: 24px;
+    color: #ffd700; /* Золотий колір */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: inline-block;
+    /* Додаємо тінь, яка імітує початкове сяйво */
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    /* Запускаємо анімацію */
+    animation: magic-pulse 2s infinite ease-in-out;
+}
+
+/* Ефект при наведенні мишкою */
+.oracle-star:hover {
+    transform: scale(1.2) rotate(15deg);
+    color: #fff;
+    text-shadow: 0 0 15px #ffd700, 0 0 25px #ffd700;
+}
+
+/* Сама анімація підсвічування */
+@keyframes magic-pulse {
+    0% {
+        text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 0 15px #ffd700, 0 0 25px #ff8c00, 0 0 35px #ffd700;
+        transform: scale(1.1);
+    }
+    100% {
+        text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
+        transform: scale(1);
+    }
+}

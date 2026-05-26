@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Мої Трапези</title>
+</head>
+<body style="background-color: #0a1f12; color: #e0e0e0; font-family: 'Philosopher', sans-serif;">
+
+    {% include '_navigation.html' %}
+
+    <div style="max-width: 800px; margin: 40px auto; padding: 20px;">
+        <h2 style="font-family: 'Almendra', serif; color: #d4af37; font-size: 2.5rem; text-align: center;">Історія Трапез</h2>
+
+        <div style="display: grid; gap: 15px;">
+            {% for order in us_orders %}
+            <div style="background: rgba(26, 60, 38, 0.4); border: 1px solid #d4af37; padding: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="margin: 0; color: #d4af37;">Замовлення №{{ order.id }}</h3>
+                    <p style="margin: 5px 0; font-size: 0.9rem; opacity: 0.8;">
+                        <i class="fas fa-calendar-alt"></i> {{ order.order_time }}
+                    </p>
+                    <p style="margin: 5px 0; color: #ffd700;">
+                        <i class="fas fa-clock"></i> Очікування: ~25 хв.
+                    </p>
+                </div>
+                <a href="/my_order/{{ order.id }}" style="background: #d4af37; color: #0a1f12; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-family: 'Almendra', serif;">
+                    ДЕТАЛІ СУВОЮ
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

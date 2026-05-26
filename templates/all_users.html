@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/static/css/style.css">
+<title>Користувачі</title>
+<style>
+body {background:#0f172a; color:white; font-family:Arial;}
+table {width:100%;}
+</style>
+</head>
+<body>
+
+{% include '_admin_navigation.html' %}
+
+<h2>Користувачі</h2>
+
+<table>
+<tr><th>ID</th><th>Нік</th><th>Email</th></tr>
+
+{% for user in all_users %}
+<tr>
+<td>{{ user.id }}</td>
+<td>{{ user.nickname }}</td>
+<td>{{ user.email }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>

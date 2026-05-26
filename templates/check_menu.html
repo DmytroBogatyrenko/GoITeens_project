@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/static/css/style.css">
+<title>Адмін меню</title>
+<style>
+body {background:#0f172a; color:white; font-family:Arial;}
+table {width:100%;}
+</style>
+</head>
+<body>
+
+{% include '_admin_navigation.html' %}
+
+<h2>Меню</h2>
+
+<table>
+<tr><th>ID</th><th>Назва</th><th>Ціна</th><th>Статус</th><th>Дія</th></tr>
+
+{% for pos in all_positions %}
+<tr>
+<td>{{ pos.id }}</td>
+<td>{{ pos.name }}</td>
+<td>{{ pos.price }}</td>
+<td>{{ "Так" if pos.active else "Ні" }}</td>
+<td>
+<form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="pos_id" value="{{ pos.id }}">
+<button name="change_status">Статус</button>
+<button name="delete_position">Видалити</button>
+</form>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

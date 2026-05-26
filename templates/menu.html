@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Трапезна Зала | Цитадель Смаку</title>
+    <style>
+        :root {
+            --deep-green: #0a1f12;
+            --forest-green: #1a3c26;
+            --gold: #d4af37;
+        }
+        
+        .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+        
+        body {
+            background-color: var(--deep-green);
+            color: #e0e0e0;
+            font-family: 'Philosopher', sans-serif;
+            margin: 0;
+            overflow-x: hidden; /* Запобігає випадковому боковому скролу */
+        }
+
+        .ancient-italic { font-style: italic !important; color: #ccc; }
+
+        /* Стабілізація кошика */
+        .cart-status {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--gold); color: var(--deep-green);
+            padding: 10px 20px; border-radius: 50px;
+            font-weight: bold; z-index: 1000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* ГОЛОВНА СТАБІЛІЗАЦІЯ ЕКРАНУ */
+        .menu-wrapper { 
+            display: flex; 
+            max-width: 1400px; 
+            margin: 40px auto; 
+            gap: 30px; 
+            padding: 0 20px;
+            flex-direction: row; /* За замовчуванням десктоп */
+        }
+
+        .filter-sidebar {
+            width: 280px; 
+            flex-shrink: 0; /* Щоб сайдбар не стискався */
+            background: rgba(26, 60, 38, 0.5);
+            border: 2px solid var(--gold); 
+            padding: 25px;
+            border-radius: 5px; 
+            height: fit-content;
+            position: sticky; 
+            top: 20px;
+        }
+
+        .menu-grid { 
+            flex: 1; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* Адаптивність для планшетів та телефонів */
+        @media (max-width: 992px) {
+            .menu-wrapper {
+                flex-direction: column; /* Сайдбар переїжджає вгору */
+            }
+            .filter-sidebar {
+                width: 100%;
+                position: static; /* Вимикаємо липкість на мобілках */
+                box-sizing: border-box;
+            }
+            .cart-status {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+                padding: 15px; /* Більша зона для натискання пальцем */
+            }
+            .oracle-fly-trigger {
+                right: 20px !important;
+                bottom: 80px !important;
+                font-size: 30px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5rem !important; }
+            .menu-grid { grid-template-columns: 1fr; } /* Одна картка на рядок */
+        }
+
+        /* Стилі карток та інше */
+        .menu-card {
+            background: rgba(26, 60, 38, 0.25); border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: 0.4s; display: flex; flex-direction: column;
+            width: 100%;
+        }
+        .menu-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--gold); }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .price-tag { font-size: 1.4rem; color: var(--gold); font-weight: bold; margin: 10px 0; }
+        .btn-order {
+            width: 100%; background: transparent; border: 1px solid var(--gold);
+            color: var(--gold); padding: 12px; cursor: pointer;
+            font-family: 'Almendra', serif; transition: 0.3s;
+        }
+        .btn-order:hover { background: var(--gold); color: var(--deep-green); }
+        .order-form { margin-top: auto; display: flex; gap: 5px; }
+        .num-input { width: 50px; background: #051109; border: 1px solid var(--gold); color: white; text-align: center; }
+
+        /* ОРАКУЛ */
+        .oracle-fly-trigger {
+            position: fixed; bottom: 100px; right: 100px;
+            font-size: 40px; color: #d4af37; 
+            cursor: pointer; z-index: 10000;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            animation: oracleFlight 6s ease-in-out infinite, oracleGlow 2s ease-in-out infinite;
+        }
+
+        .oracle-chat-window {
+            display: none; position: fixed; bottom: 10px; right: 10px; width: calc(100% - 20px);
+            max-width: 350px; background: rgba(10, 31, 18, 0.98); border: 2px solid #d4af37;
+            border-radius: 10px; z-index: 9999;
+        }
+        .oracle-chat-window.open { display: block; }
+
+        @keyframes oracleFlight {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -30px) rotate(10deg); }
+            50% { transform: translate(10px, -50px) rotate(-5deg); }
+        }
+
+        @keyframes oracleGlow {
+            0%, 100% { text-shadow: 0 0 10px #d4af37; opacity: 0.8; }
+            50% { text-shadow: 0 0 25px #ffd700, 0 0 40px #fff; opacity: 1; }
+        }
+
+        input[type="text"], input[type="range"] { width: 100%; }
+    </style>
+</head>
+<body>
+
+    {% include '_navigation.html' %}
+
+    <a href="{{ url_for('create_order') }}" class="cart-status">
+        <i class="fas fa-shopping-bag"></i>
+        <span>Торба: {{ session.get('basket', {})|length }}</span>
+    </a>
+
+    <div style="text-align: center; padding: 40px 10px 10px;">
+        <h1 style="font-family: 'Almendra', serif; font-size: clamp(2rem, 8vw, 4rem); color: var(--gold); margin: 0;">ТРАПЕЗНА ЗАЛА</h1>
+    </div>
+
+    <div class="menu-wrapper">
+        <aside class="filter-sidebar">
+            <h3 style="color: var(--gold); margin-top: 0;">Фільтри Магії</h3>
+            <div class="filter-group">
+                <label for="searchInput">Пошук</label>
+                <input type="text" id="searchInput" placeholder="Назва страви..." oninput="applyFilters()">
+            </div>
+            <div class="filter-group">
+                <label for="priceRange">Макс. ціна: <span id="priceLabel">1000</span> 🪙</label>
+                <input type="range" id="priceRange" min="0" max="1000" value="1000" step="10" oninput="updatePrice(this.value)">
+            </div>
+        </aside>
+
+        <main class="menu-grid" id="menuGrid">
+            {% for pos in all_positions %}
+            <div class="menu-card" data-name="{{ pos.name.lower() }}" data-price="{{ pos.price }}">
+                <img src="{{ url_for('static', filename='menu/' + pos.file_name) if 'http' not in pos.file_name else pos.file_name }}" class="card-img" alt="{{ pos.name }}">
+                <div class="card-content">
+                    <h4 style="font-family: 'Almendra', serif; color: var(--gold); font-size: 1.5rem; margin: 0;">{{ pos.name }}</h4>
+                    <p class="ancient-italic" style="font-size: 0.9rem;">{{ pos.ingredients }}</p>
+                    <span class="price-tag">{{ pos.price }} 🪙</span>
+                    <form action="{{ url_for('add_to_basket') }}" method="POST" class="order-form">
+                        <input type="hidden" name="csrf_token" value="{{ session['csrf_token'] }}">
+                        <input type="hidden" name="name" value="{{ pos.name }}">
+                        <input type="number" name="num" value="1" min="1" class="num-input">
+                        <button type="submit" class="btn-order">У ТОРБУ</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </main>
+    </div>
+
+    <i class="fas fa-star oracle-fly-trigger" id="oracle-fly-trigger" title="Покликати Духа"></i>
+
+    <div class="oracle-chat-window" id="oracle-chat-window">
+        <div class="oracle-header" style="background: #1a3c26; color: #d4af37; padding: 10px; display: flex; justify-content: space-between;">
+            <span>Дух Цитаделі</span>
+            <i class="fas fa-times close-oracle" id="close-oracle" style="cursor:pointer;"></i>
+        </div>
+        <div class="oracle-response-area" id="oracle-response-area" style="padding: 15px; max-height: 200px; overflow-y: auto;">
+            Вітаю, мандрівнику. Що шукаєш у нашому меню?
+        </div>
+        <div class="oracle-input-area" style="padding: 10px;">
+            <input type="text" id="oracle-input-field" placeholder="Запитай Оракула..." style="width: 100%; background: none; border: none; border-bottom: 1px solid var(--gold); color: white;">
+        </div>
+    </div>
+
+    <script>
+        function updatePrice(val) {
+            document.getElementById('priceLabel').innerText = val;
+            applyFilters();
+        }
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const maxPrice = parseInt(document.getElementById('priceRange').value);
+            const cards = document.querySelectorAll('.menu-card');
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                const price = parseInt(card.getAttribute('data-price'));
+                card.style.display = (name.includes(search) && price <= maxPrice) ? "flex" : "none";
+            });
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/oracle.js') }}"></script>
+</body>
+</html>

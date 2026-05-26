@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Бронювання Столу | Цитадель</title>
+</head>
+<body>
+    {% include '_navigation.html' %}
+
+    <div class="container">
+        <div class="card" style="max-width: 600px; margin: auto; border: 2px solid var(--deep-green); padding: 40px; background: rgba(20, 35, 25, 0.9);">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <img src="https://images.unsplash.com/photo-1533777857419-377a700888f4?q=80&w=600&auto=format&fit=crop" 
+                     width="150" style="border-radius: 10px; border: 2px solid var(--gold);">
+                <h2 style="color: var(--gold); margin-top: 15px;">Зарезервувати трон</h2>
+            </div>
+
+            <form method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; margin-bottom: 10px; color: var(--gold);">
+                        <i class="fas fa-users"></i> На яку кількість мечей?
+                    </label>
+                    <select name="table_type" style="background: rgba(0,0,0,0.3); color: #fff; border: 1px solid var(--gold);">
+                        <option value="1-2">Для самотнього мандрівника (1-2)</option>
+                        <option value="3-4">Для невеликого загону (3-4)</option>
+                        <option value="4+">Для лицарського ордену (4+)</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; margin-bottom: 10px; color: var(--gold);">
+                        <i class="fas fa-calendar-alt"></i> Коли прибудете в Цитадель?
+                    </label>
+                    <input type="datetime-local" name="time" required style="background: rgba(0,0,0,0.3); color: white; border: 1px solid var(--gold);">
+                </div>
+
+                <button class="btn-stone">Забити місце в залі</button>
+            </form>
+
+            {% if message %}
+                <h3 style="color: #4ade80; text-align: center; margin-top: 20px;">{{message}}</h3>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

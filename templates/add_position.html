@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Ковальня Страв</title>
+</head>
+<body>
+    {% include '_navigation.html' %}
+    <div class="container">
+    <div class="parchment-form" style="max-width: 700px;">
+        <h2>Додати Нову Страву</h2>
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input name="name" placeholder="Назва страви..." required>
+            <textarea name="description" placeholder="Легенда страви..." rows="3" required></textarea>
+            <input name="ingredients" placeholder="Інгредієнти..." required>
+            
+            <div style="display: flex; gap: 10px;">
+                <input type="number" name="price" placeholder="Ціна" required style="flex: 1;">
+                <input type="number" name="weight" placeholder="Вага" required style="flex: 1;">
+                <input type="number" name="prep_time" placeholder="Час" required style="flex: 1;">
+            </div>
+
+            <div style="margin-top: 15px; padding: 10px; border: 1px dashed #8b4513;">
+                <label><b>Варіант А:</b> Вставити посилання на картинку (URL)</label>
+                <input type="text" name="image_url" placeholder="https://example.com/image.jpg" style="width: 100%; margin-bottom: 10px;">
+                
+                <label><b>Варіант Б:</b> Завантажити файл з комп'ютера</label>
+                <input type="file" name="file" accept="image/*" style="width: 100%;">
+            </div>
+            
+            <button class="btn-stone" style="margin-top: 20px;">Викувати Страву</button>
+        </form>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>{{ position.name }}</title>
+</head>
+<body>
+    {% include '_navigation.html' %}
+    <div class="container">
+        <div class="card" style="display: flex; gap: 50px; background: rgba(20, 35, 25, 0.9); border: 2px solid var(--gold); border-radius: 20px; padding: 40px; align-items: center; flex-wrap: wrap;">
+            
+            <div style="flex: 1; min-width: 300px;">
+                <div style="border: 8px solid #2e2e2e; outline: 2px solid var(--gold); box-shadow: 0 0 30px rgba(0,0,0,0.8); border-radius: 10px; overflow: hidden;">
+                    {% if position.file_name and position.file_name.startswith('http') %}
+                        <img src="{{ position.file_name }}" style="width: 100%; display: block; object-fit: cover;" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text={{ position.name }}';">
+                    {% elif position.file_name %}
+                        <img src="{{ url_for('static', filename='menu/' + position.file_name) }}" style="width: 100%; display: block; object-fit: cover;" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=Малюнок+втрачено';">
+                    {% else %}
+                        <img src="https://placehold.co/600x400?text=Немає+зображення" style="width: 100%; display: block; object-fit: cover;">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div style="flex: 1; min-width: 300px;">
+                <h1 style="color: var(--gold); font-size: 3rem; margin-top: 0;">{{ position.name }}</h1>
+                <p style="font-size: 1.3rem; color: #fff; line-height: 1.6;">{{ position.description }}</p>
+                
+                <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; border-left: 4px solid var(--gold); margin-top: 20px;">
+                    <p style="color: #fff;"><strong>Інгредієнти:</strong> {{ position.ingredients }}</p>
+                    <p style="color: #fff;"><strong>Вага:</strong> {{ position.weight }}г</p>
+                    <p style="color: #ffaaaa;"><strong>Час приготування:</strong> ~{{ position.prep_time }} хвилин</p>
+                </div>
+
+                <h2 style="color: #4ade80; font-size: 2.5rem; margin: 25px 0;">{{ position.price }} монет</h2>
+
+                <form method="post" style="display: flex; gap: 15px;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="number" name="num" value="1" min="1" style="width: 80px; background: #000; border: 1px solid var(--gold); color: white; text-align: center; font-size: 1.2rem;">
+                    <button class="btn-stone" style="flex: 1; font-size: 1.2rem;">Додати до торби</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

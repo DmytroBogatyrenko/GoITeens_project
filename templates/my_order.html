@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Сувій Замовлення</title>
+</head>
+<body style="background:#0a1f12; color: #3d1f07;">
+
+{% include '_navigation.html' %}
+
+<div style="max-width: 600px; margin: 50px auto; padding: 30px; background: #f4e4bc; border: 2px solid #8b4513; border-radius: 10px; box-shadow: 10px 10px 0px #5d2e0a;">
+    <h2 style="text-align: center; font-family: serif;">📜 Замовлення №{{ order.id }}</h2>
+    <p style="text-align: center; font-size: 0.9rem;">Час запечатування: {{ order.order_time.strftime('%H:%M:%S') }}</p>
+
+    <hr style="border: 1px double #8b4513;">
+
+    <table style="width: 100%; margin: 20px 0;">
+        {% for item in items %}
+        <tr>
+            <td style="padding: 10px;"><strong>{{ item.name }}</strong> x{{ item.qty }}</td>
+            <td style="text-align: right; color: #666;">⏳ {{ item.prep_time }} хв.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div style="background: rgba(139, 69, 19, 0.1); padding: 15px; border-radius: 5px;">
+        <p style="margin: 5px 0; font-size: 1.3rem;"><strong>Разом:</strong> {{ total_price }} 🪙</p>
+        <p style="margin: 5px 0; color: #a04000;">
+            <i class="fas fa-fire"></i> <strong>Кухня обіцяє впоратись за:</strong> {{ max_wait }} хв.
+        </p>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{{ url_for('menu') }}" style="color: #8b4513; font-weight: bold;">Повернутися до зали</a>
+    </div>
+</div>
+
+</body>
+</html>

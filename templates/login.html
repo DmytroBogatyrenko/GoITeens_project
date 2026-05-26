@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Вхід до Ордену</title>
+    <style>
+        .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
+</head>
+<body class="auth-body">
+
+<div class="parchment-auth">
+    <h2 class="auth-title">Вхід до Ордену</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set category, message = messages[0] %}
+            <div class="alert-medieval">{{ message }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/login" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        
+        <label for="login_nickname" class="visually-hidden">Ім'я лицаря</label>
+        <input type="text" id="login_nickname" name="nickname" class="auth-input" placeholder="Ім'я лицаря" required>
+        
+        <label for="login_password" class="visually-hidden">Таємний пароль</label>
+        <input type="password" id="login_password" name="password" class="auth-input" placeholder="Таємний пароль" required>
+        
+        <button type="submit" class="btn-knight">Увійти до зали</button>
+    </form>
+
+    <div class="auth-footer">
+        <a href="/register" class="auth-link">Ще не в Ордені? Присягнути</a>
+        <a href="{{ url_for('home') }}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Відступити до брами
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

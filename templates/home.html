@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <title>Цитадель Смаку | Таємнича Фортеця</title>
+    <style>
+        :root {
+            --deep-green: #0a1f12;
+            --forest-green: #1a3c26;
+            --gold: #d4af37;
+            --parchment: #fcf5e5;
+            --fire-core: #ffdf00;
+            --fire-out: #ff4500;
+        }
+
+        body {
+            background-color: var(--deep-green);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            margin: 0;
+            /* Встановлюємо основний шрифт, але курсив буде особливим */
+            font-family: 'Philosopher', sans-serif;
+            cursor: url('https://cur.cursors-4u.net/games/gam-4/gam372.cur'), auto;
+        }
+
+        /* --- КУРСИВНИЙ СТИЛЬ (Тот самий магічний) --- */
+        .ancient-italic {
+            font-style: italic;
+            font-family: 'Philosopher', sans-serif;
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* --- АНІМАЦІЇ ТА ДИНАМІКА --- */
+
+        /* Дихаючий фон замку */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 160%);
+            pointer-events: none;
+            z-index: 10;
+            animation: breathe 10s infinite alternate;
+        }
+
+        @keyframes breathe {
+            from { opacity: 0.4; }
+            to { opacity: 0.8; }
+        }
+
+        /* Магічні іскри при кліку */
+        .click-magic {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            box-shadow: 0 0 15px var(--gold);
+            animation: spark-magic 1s ease-out forwards;
+        }
+
+        @keyframes spark-magic {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(5) translateY(-40px); opacity: 0; }
+        }
+
+        /* Шпигун, що визирає з тіні */
+        .shadow-spy {
+            position: fixed;
+            left: -90px;
+            top: 50%;
+            font-size: 80px;
+            color: rgba(0,0,0,0.5);
+            z-index: 5;
+            transition: 0.5s;
+            pointer-events: none;
+            animation: spy-peek 20s infinite;
+        }
+
+        @keyframes spy-peek {
+            0%, 95%, 100% { left: -100px; }
+            97% { left: -10px; transform: rotate(5deg); }
+        }
+
+        /* --- РЕАЛІСТИЧНИЙ ДРАКОН ТА ВОГОНЬ --- */
+        .dragon-guardian {
+            position: fixed;
+            bottom: -30px;
+            right: -30px;
+            z-index: 100;
+            width: 250px;
+            height: 250px;
+            /* Я використав анімований GIF дракона */
+            background: url('https://cdn.pixabay.com/animation/2023/04/05/15/38/15-38-51-496_512.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 0 15px #000);
+            pointer-events: none;
+        }
+
+        /* Реалістичний струмінь вогню з пащі */
+        .fire-stream {
+            position: absolute;
+            bottom: 80px; /* Коректуємо під рта */
+            right: 180px;
+            width: 0;
+            height: 70px;
+            /* Я використав анімований GIF вогню */
+            background: url('https://cdn.pixabay.com/animation/2022/07/31/13/41/13-41-10-600_512.gif');
+            background-size: cover;
+            border-radius: 50px;
+            opacity: 0;
+            transition: 0.1s;
+            animation: dragonBreath 10s infinite; /* Циклічне дихання */
+        }
+
+        @keyframes dragonBreath {
+            0%, 70%, 100% { width: 0; opacity: 0; }
+            75% { width: 400px; opacity: 1; filter: drop-shadow(-20px 0 30px var(--fire-out)); }
+            85% { width: 350px; opacity: 1; }
+        }
+
+        /* --- СТИЛІ КОНТЕНТУ --- */
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(5, 15, 8, 0.7), rgba(5, 15, 8, 0.95)), 
+                        url('https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?q=80&w=2000') center/cover no-repeat;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .hero-title {
+            font-family: 'Almendra', serif;
+            font-size: 7rem;
+            color: var(--gold);
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+            margin-bottom: 10px;
+            letter-spacing: 12px;
+            animation: title-pulse 4s infinite alternate;
+        }
+
+        @keyframes title-pulse {
+            from { text-shadow: 0 0 20px var(--gold); }
+            to { text-shadow: 0 0 60px var(--fire-out); }
+        }
+
+        .scroll-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #f4e4bc;
+            color: #2c1e12;
+            padding: 70px;
+            border-radius: 5px;
+            box-shadow: 20px 20px 80px rgba(0,0,0,0.8);
+            position: relative;
+            transform: rotate(-1.5deg);
+            border-left: 18px solid #8b4513;
+        }
+
+        .scroll-content h2 {
+            font-family: 'Almendra', serif;
+            font-size: 2.8rem;
+            border-bottom: 3px solid #8b4513;
+            display: inline-block;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 80px;
+        }
+
+        .feature-item {
+            background: rgba(26, 60, 38, 0.5);
+            border: 2px solid var(--gold);
+            padding: 40px 30px;
+            transition: 0.5s;
+            text-align: center;
+        }
+
+        .feature-item:hover {
+            background: var(--gold);
+            color: var(--deep-green);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .feature-item i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .magic-sep {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 80px 0;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1s ease-out;
+        }
+    </style>
+</head>
+<body onclick="spawnMagic(event)">
+
+    {% include '_navigation.html' %}
+
+    <div class="shadow-spy"><i class="fas fa-user-ninja"></i></div>
+
+    <div class="dragon-guardian">
+        <div class="fire-stream"></div>
+    </div>
+
+    <section class="hero-section">
+        <div class="reveal">
+            <p style="letter-spacing: 10px; color: var(--gold); font-weight: bold; text-transform: uppercase;">Стародавній Орден Смаку</p>
+            <h1 class="hero-title">ЦИТАДЕЛЬ</h1>
+            <p class="ancient-italic" style="font-size: 2rem; max-width: 750px; margin: 15px auto;">
+                "Тут час зупиняється, а кожен ковток елю повертає спогади про забуті королівства."
+            </p>
+            <div style="margin-top: 50px;">
+                <a href="/menu" class="btn-stone" style="font-size: 1.5rem; padding: 20px 50px;">РОЗГОРНУТИ МАНУСКРИПТ МЕНЮ</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div style="padding: 130px 0;">
+            <div class="scroll-content reveal">
+                <h2>Легенда нашої кухні</h2>
+                <p class="ancient-italic" style="font-size: 1.4rem; line-height: 1.9; color: #3e2723;">
+                    Цитадель Смаку була заснована на місці стародавньої корчми, де за переказами, мандрівники обмінювали свої історії на чашу елю. Ми зберегли цей дух: наші стіни пам'ятають шепіт королів, а печі досі горять вогнем, принесеним з далеких гір.
+                </p>
+                <p class="ancient-italic" style="font-size: 1.4rem; line-height: 1.9; color: #3e2723;">
+                    Кожен інгредієнт ми відбираємо так, ніби готуємо для самого магістра ордену. Наше м'ясо витримується в темних льохах, а трави збираються на світанку в лісах навколо Києва. Ми не просто годуємо — ми проводимо ритуал насичення душі.
+                </p>
+            </div>
+        </div>
+
+        <div class="magic-sep"></div>
+
+        <div class="features-grid">
+            <div class="feature-item reveal">
+                <i class="fas fa-fire-alt"></i>
+                <h3>Магія Вогню</h3>
+                <p>Жодного електричного жару. Тільки вугілля дуба та дика вільха для істинного смаку дичини.</p>
+            </div>
+            <div class="feature-item reveal">
+                <i class="fas fa-book-dead"></i>
+                <h3>Таємні Рецепти</h3>
+                <p>Ми готуємо за рукописами 1420 року. Смак, який був доступний лише лордам, тепер ваш.</p>
+            </div>
+            <div class="feature-item reveal">
+                <i class="fas fa-beer"></i>
+                <h3>Кров Землі</h3>
+                <p>Наш ель вариться у мідних чанах під повним місяцем. Кожен ковток — це магія.</p>
+            </div>
+        </div>
+
+        <div style="padding: 100px 0;">
+            <h2 style="text-align: center; color: var(--gold); font-size: 3rem; margin-bottom: 50px;">Зазирни всередину...</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 50px;" class="gallery-mystic">
+                <img src="https://st5.depositphotos.com/25138294/62791/i/450/depositphotos_627914844-stock-photo-ancient-medieval-dining-hall-meat.jpg" alt="Зала" class="reveal" style="width: 100%; height: 400px; object-fit: cover; border: 2px solid var(--gold);">
+                <img src="https://st.depositphotos.com/25138294/58359/i/450/depositphotos_583592366-stock-photo-illustration-medieval-great-hall-lit.jpg" alt="Стіл" class="reveal" style="width: 100%; height: 400px; object-fit: cover; border: 2px solid var(--gold);">
+            </div>
+        </div>
+
+        <div class="reveal" style="background: linear-gradient(45deg, var(--deep-green), var(--forest-green)); padding: 90px; border: 3px solid var(--gold); text-align: center; margin: 100px 0; box-shadow: 0 0 80px #000;">
+            <h2 style="color: var(--gold); font-size: 3.5rem;">Твій трон вже чекає</h2>
+            <p class="ancient-italic" style="margin-bottom: 50px; font-size: 1.6rem;">Стань частиною легенди вже сьогодні. Кількість місць обмежена стінами вежі.</p>
+            <a href="/reserved" class="btn-stone" style="padding: 25px 70px; font-size: 2rem; text-transform: uppercase;">ЗАСТОВБИТИ МІЦЕ</a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 70px; color: #555; border-top: 1px solid var(--forest-green); background: #030a05;">
+        <div style="margin-bottom: 25px; color: var(--gold);">
+            <i class="fab fa-facebook fa-2x" style="margin: 0 20px;"></i>
+            <i class="fab fa-instagram fa-2x" style="margin: 0 20px;"></i>
+            <i class="fab fa-telegram fa-2x" style="margin: 0 20px;"></i>
+        </div>
+        <p>&copy; 2026 Орден Цитаделі Смаку. Всі права захищені мечем та законом гоя.</p>
+    </footer>
+
+    <script>
+        // Ефект магічних іскор при кліку
+        function spawnMagic(e) {
+            for(let i = 0; i < 6; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'click-magic';
+                spark.style.left = (e.pageX + (Math.random() - 0.5) * 30) + 'px';
+                spark.style.top = (e.pageY + (Math.random() - 0.5) * 30) + 'px';
+                document.body.appendChild(spark);
+                
+                setTimeout(() => spark.remove(), 1000);
+            }
+        }
+
+        // Поява елементів при скролі
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                    el.style.opacity = "1";
+                    el.style.transform = "translateY(0)";
+                }
+            });
+        });
+        
+        // Запуск для першого екрану
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+
+</body>
+</html>

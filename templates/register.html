@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Посвята в Лицарі</title>
+    <style>
+        .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
+</head>
+<body class="auth-body">
+
+<div class="parchment-auth">
+    <h2 class="auth-title">Посвята</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set category, message = messages[0] %}
+            <div class="alert-medieval">{{ message }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/register" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        
+        <label for="reg_nickname" class="visually-hidden">Ваше ім'я в історії</label>
+        <input type="text" id="reg_nickname" name="nickname" class="auth-input" placeholder="Ваше ім'я в історії" required>
+        
+        <label for="reg_email" class="visually-hidden">Голубина пошта (Email)</label>
+        <input type="email" id="reg_email" name="email" class="auth-input" placeholder="Голубина пошта (Email)" required>
+        
+        <label for="reg_password" class="visually-hidden">Створити пароль</label>
+        <input type="password" id="reg_password" name="password" class="auth-input" placeholder="Створити пароль" required>
+        
+        <button type="submit" class="btn-knight">Отримати шпори</button>
+    </form>
+
+    <div class="auth-footer">
+        <a href="/login" class="auth-link">Вже маєте титул? Увійдіть</a>
+        <a href="{{ url_for('home') }}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Повернутися до тракту
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+<div class="smoke-container">
+    <div class="fog-cloud cloud1"></div>
+    <div class="fog-cloud cloud2"></div>
+</div>
+
+<nav class="nav">
+    <a href="{{ url_for('home') }}"><i class="fas fa-fort-awesome"></i> Головна</a>
+    <a href="{{ url_for('menu') }}"><i class="fas fa-utensils"></i> Трапеза</a>
+    <a href="{{ url_for('create_order') }}"><i class="fas fa-briefcase"></i> Торба</a>
+    <a href="{{ url_for('reserved') }}"><i class="fas fa-handshake"></i> Бронювання</a>
+
+    {% if current_user.is_authenticated %}
+        {% if current_user.nickname|lower == 'admin' %}
+            <a href="{{ url_for('admin_panel') }}" style="color: #ffd700; border: 1px solid #ffd700; background: rgba(255, 215, 0, 0.1);">
+                <i class="fas fa-crown"></i> Рада Лордів
+            </a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Вийти ({{ current_user.nickname }})</a>
+    {% else %}
+        <a href="{{ url_for('login') }}"><i class="fas fa-key"></i> Вхід</a>
+    {% endif %}
+</nav>
+
+<div class="dragon-bg"></div>
+<div class="fire-corner"></div>
+
+
+<script>
+// СКРИПТ ПЛАВНОГО З'ЯВЛЕННЯ ЕЛЕМЕНТІВ (REVEAL)
+document.addEventListener("DOMContentLoaded", function() {
+    const reveals = document.querySelectorAll(".reveal");
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 }); // Анімація почнеться, коли з'явиться хоча б 10% картки
+
+    reveals.forEach(reveal => {
+        revealObserver.observe(reveal);
+    });
+});
+</script>
+</body>
+<div class="dragon-bg"></div>
+<div class="fire-corner"></div>
+</html>

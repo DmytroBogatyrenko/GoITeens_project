@@ -1,0 +1,31 @@
+<div class="chat-bubble" id="chatBubble" title="Запитати Оракула">
+  <span class="chat-bubble__icon">🔮</span>
+  <span class="chat-bubble__ping"></span>
+</div>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-window__header">
+    <div class="chat-window__header-info">
+      <div class="chat-window__avatar">🔮</div>
+      <div>
+        <div class="chat-window__name">Дух Цитаделі</div>
+        <div class="chat-window__status">бачить меню...</div>
+      </div>
+    </div>
+    <button class="chat-window__close" id="chatClose">×</button>
+  </div>
+  <div class="chat-window__messages" id="chatMessages">
+    <div class="chat-msg chat-msg--bot">
+      <div class="chat-msg__bubble">
+        Вітаю, мандрівнику. Що ти хочеш дізнатися про трапезу в нашій залі?
+      </div>
+    </div>
+  </div>
+  <div class="chat-window__footer">
+    <input class="chat-window__input" id="chatInput" type="text" placeholder="Твоє питання..." autocomplete="off">
+    <button class="chat-window__send" id="chatSend">🚀</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
